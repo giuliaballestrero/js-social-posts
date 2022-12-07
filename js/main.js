@@ -132,3 +132,9 @@ divContainer.appendChild(divPost);
 
 };
 
+//Milestone 2 - cambia colore al like // icrementa like counter // salva id dei likes in un array
+const likeButton = document.querySelector('.like-button');
+
+likeButton.addEventListener('click', function(){
+    likeButton.classList.add('like-button--liked')
+});
