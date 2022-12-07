@@ -123,7 +123,7 @@ divContainer.innerHTML += `
                 </a>
             </div>
             <div class="likes__counter">
-                Piace a <b id="like-counter-${post.id}" class="js-likes-counter">${post.likes}</b> persone
+                Piace a <b id="like-counter-${posts[i].id}" class="js-likes-counter">${post.likes}</b> persone
             </div>
         </div> 
     </div>
@@ -141,7 +141,7 @@ console.log(likedList);
 //seleziono tutti i like button dei post
 const likeButton = document.querySelectorAll('.like-button');
 //seleziono tutti i contatori di like 
-const likeCounter = document.querySelectorAll('.js-likes-counter');
+const likeCounter = document.querySelectorAll('.likes__counter');
 
 //creo un ciclo per gestire i like di ogni post 
 likeButton.forEach( (element, index) => {
@@ -162,7 +162,7 @@ likeButton.forEach( (element, index) => {
             //aggiungo il like al contatore
             posts[index].likes++;
             newLike = posts[index].likes;
-            likeCounter.innerHTML = newLike;
+            likeCounter[index].innerHTML = `Piace a <b id="like-counter-${posts[index].id}" class="js-likes-counter">${newLike}</b> persone`;
     
 
         } else { //se ha il like
@@ -176,6 +176,7 @@ likeButton.forEach( (element, index) => {
             //rimuovo il like dal contatore
             posts[index].likes--;
             newLike = posts[index].likes;
+            likeCounter[index].innerHTML = `Piace a <b id="like-counter-${posts[index].id}" class="js-likes-counter">${newLike}</b> persone`;
             
 
         }
