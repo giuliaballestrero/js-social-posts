@@ -91,59 +91,100 @@ const posts = [
 //prendo il container nel dom
 const divContainer = document.getElementById('container');
 
+//creo un ciclo per scrivere i tag da mettere nel div container
 for (let i = 0; i < posts.length; i++) {
 
-//creo il div che conterrà il post
-const divPost = document.createElement('div');
-divPost.classList.add('post');
 const post = posts[i];
 
-divPost.innerHTML = `
-<div class="post__header">
-    <div class="post-meta">                    
-        <div class="post-meta__icon">
-            <img class="profile-pic" src="${post.author.image}" alt="${post.author.name}">                    
+//definisco il contenuto da inserire nel container
+divContainer.innerHTML += `
+<div class="post">
+    <div class="post__header">
+        <div class="post-meta">                    
+            <div class="post-meta__icon">
+                <img class="profile-pic" src="${post.author.image}" alt="${post.author.name}">                    
+            </div>
+            <div class="post-meta__data">
+                <div class="post-meta__author">${post.author.name}</div>
+                <div class="post-meta__time">${post.created}</div>
+            </div>                    
         </div>
-        <div class="post-meta__data">
-            <div class="post-meta__author">${post.author.name}</div>
-            <div class="post-meta__time">${post.created}</div>
-        </div>                    
     </div>
-</div>
-<div class="post__text">${post.content}</div>
-<div class="post__image">
-    <img src="${post.media}" alt="">
-</div>
-<div class="post__footer">
-    <div class="likes js-likes">
-        <div class="likes__cta">
-            <a class="like-button  js-like-button" href="#" data-postid="1">
-                <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                <span class="like-button__label">Mi Piace</span>
-            </a>
-        </div>
-        <div class="likes__counter">
-            Piace a <b id="like-counter-1" class="js-likes-counter">${post.likes}</b> persone
-        </div>
-    </div> 
+    <div class="post__text">${post.content}</div>
+    <div class="post__image">
+        <img src="${post.media}" alt="">
+    </div>
+    <div class="post__footer">
+        <div class="likes js-likes">
+            <div class="likes__cta">
+                <a class="like-button  js-like-button" href="#" data-postid="${post.id}">
+                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                    <span class="like-button__label">Mi Piace</span>
+                </a>
+            </div>
+            <div class="likes__counter">
+                Piace a <b id="like-counter-${post.id}" class="js-likes-counter">${post.likes}</b> persone
+            </div>
+        </div> 
+    </div>
 </div>`;
-
-divContainer.appendChild(divPost);
 
 };
 
 //Milestone 2 - cambia colore al like // icrementa like counter // salva id dei likes in un array
-const likeButton = document.querySelector('.like-button');
-let dislike = false;
 
-likeButton.addEventListener('click', function(){
+//creo una nuova array per gli elementi liked
+likedList = [];
+console.log(likedList);
+
+
+//seleziono tutti i like button dei post
+const likeButton = document.querySelectorAll('.like-button');
+//seleziono tutti i contatori di like 
+const likeCounter = document.querySelectorAll('.js-likes-counter');
+
+//creo un ciclo per gestire i like di ogni post 
+likeButton.forEach( (element, index) => {
+
+  //creo un evento che si attiva al click del pulsante like
+    element.addEventListener('click', function() {
+
+        //controllo se il post ha già il like
+        //se non ha il like
+        if(!likedList.includes(posts[index].id)) {
+            //aggiungo la classe per colorare il pulsante
+            element.classList.add('like-button--liked');
+            
+            //dopo aver aggigunto il like pusho il post nel nuovo array
+            likedList.push(posts[index].id);
+        
+            
+            //aggiungo il like al contatore
+            posts[index].likes++;
+            newLike = posts[index].likes;
+            likeCounter.innerHTML = newLike;
     
-    if(dislike === false) {
-        likeButton.classList.add('like-button--liked');
-        dislike = true;
-    
-    } else {
-        likeButton.classList.remove('like-button--liked');
-        dislike = false;
-    }
+
+        } else { //se ha il like
+            //rimuovo la classe per colorare il pulsante
+            element.classList.remove('like-button--liked');
+
+            //rimuovo il like dal nuovo array
+            const indexRemove = likedList.indexOf(posts[index].id);
+            likedList.splice(indexRemove, 1);
+
+            //rimuovo il like dal contatore
+            posts[index].likes--;
+            newLike = posts[index].likes;
+            
+
+        }
+        console.log(likedList);
+        console.log(newLike);
+    });
+
 });
+    
+
+
+
