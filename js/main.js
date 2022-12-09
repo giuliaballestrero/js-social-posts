@@ -96,6 +96,11 @@ for (let i = 0; i < posts.length; i++) {
 
 const post = posts[i];
 
+//inverto la stringa della data
+let newDate = post.created;
+newDate = newDate.split("-").reverse().join("-");
+console.log(newDate);
+
 //definisco il contenuto da inserire nel container
 divContainer.innerHTML += `
 <div class="post">
@@ -106,7 +111,7 @@ divContainer.innerHTML += `
             </div>
             <div class="post-meta__data">
                 <div class="post-meta__author">${post.author.name}</div>
-                <div class="post-meta__time">${post.created}</div>
+                <div class="post-meta__time">${newDate}</div>
             </div>                    
         </div>
     </div>
@@ -137,8 +142,7 @@ divContainer.innerHTML += `
 likedList = [];
 console.log(likedList);
 
-//inverto la stringa della data
-
+;
 
 //seleziono tutti i like button dei post
 const likeButton = document.querySelectorAll('.like-button');
