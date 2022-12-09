@@ -117,7 +117,7 @@ divContainer.innerHTML += `
     <div class="post__footer">
         <div class="likes js-likes">
             <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="${post.id}">
+                <a class="like-button  js-like-button" href="#/" data-postid="${post.id}">
                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                     <span class="like-button__label">Mi Piace</span>
                 </a>
@@ -137,11 +137,15 @@ divContainer.innerHTML += `
 likedList = [];
 console.log(likedList);
 
+//inverto la stringa della data
+
 
 //seleziono tutti i like button dei post
 const likeButton = document.querySelectorAll('.like-button');
 //seleziono tutti i contatori di like 
 const likeCounter = document.querySelectorAll('.likes__counter');
+
+
 
 //creo un ciclo per gestire i like di ogni post 
 likeButton.forEach( (element, index) => {
@@ -186,6 +190,4 @@ likeButton.forEach( (element, index) => {
 
 });
     
-
-
 
