@@ -94,47 +94,65 @@ const divContainer = document.getElementById('container');
 //creo un ciclo per scrivere i tag da mettere nel div container
 for (let i = 0; i < posts.length; i++) {
 
-const post = posts[i];
+    const post = posts[i];
 
-//inverto la stringa della data
-let newDate = post.created;
-newDate = newDate.split("-").reverse().join("-");
-console.log(newDate);
+    //inverto la stringa della data
+    let newDate = post.created;
+    newDate = newDate.split("-").reverse().join("-");
+    console.log(newDate);
 
-//definisco il contenuto da inserire nel container
-divContainer.innerHTML += `
-<div class="post">
-    <div class="post__header">
-        <div class="post-meta">                    
-            <div class="post-meta__icon">
-                <img class="profile-pic" src="${post.author.image}" alt="${post.author.name}">                    
+    //estraggo le iniziali del nome e cognome dell'utente
+    let inizialeN = post.author.name[0];
+    let inizialeC = post.author.name[post.author.name.indexOf(' ')+1];
+    let iniziali = inizialeN + inizialeC;
+    console.log(iniziali);
+    
+ 
+    //definisco il contenuto da inserire nel container
+    divContainer.innerHTML += `
+    <div class="post">
+        <div class="post__header">
+            <div class="post-meta">                    
+                <div class="post-meta__icon">
+                    <img class="profile-pic" src="${post.author.image}" alt="${iniziali}">                    
+                </div>
+                <div class="post-meta__data">
+                    <div class="post-meta__author">${post.author.name}</div>
+                    <div class="post-meta__time">${newDate}</div>
+                </div>                    
             </div>
-            <div class="post-meta__data">
-                <div class="post-meta__author">${post.author.name}</div>
-                <div class="post-meta__time">${newDate}</div>
-            </div>                    
         </div>
-    </div>
-    <div class="post__text">${post.content}</div>
-    <div class="post__image">
-        <img src="${post.media}" alt="">
-    </div>
-    <div class="post__footer">
-        <div class="likes js-likes">
-            <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#/" data-postid="${post.id}">
-                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                    <span class="like-button__label">Mi Piace</span>
-                </a>
-            </div>
-            <div class="likes__counter">
-                Piace a <b id="like-counter-${posts[i].id}" class="js-likes-counter">${post.likes}</b> persone
-            </div>
-        </div> 
-    </div>
-</div>`;
-
+        <div class="post__text">${post.content}</div>
+        <div class="post__image">
+            <img src="${post.media}" alt="">
+        </div>
+        <div class="post__footer">
+            <div class="likes js-likes">
+                <div class="likes__cta">
+                    <a class="like-button  js-like-button" href="#/" data-postid="${post.id}">
+                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                        <span class="like-button__label">Mi Piace</span>
+                    </a>
+                </div>
+                <div class="likes__counter">
+                    Piace a <b id="like-counter-${posts[i].id}" class="js-likes-counter">${post.likes}</b> persone
+                </div>
+            </div> 
+        </div>
+    </div>`;
 };
+
+//controllo se l'immagine dell'utente è presente
+const userPic = document.querySelectorAll('.profile-pic');
+    
+//se non è presente inserisco un immagine di default
+for (let i = 0; i < userPic.length; i++){
+    if(posts[i].author.image === null) {
+    userPic[i].classList.remove('profile-pic');
+    userPic[i].classList.add('profile-pic-default');
+    }
+}
+console.log(userPic);
 
 //Milestone 2 - cambia colore al like // icrementa like counter // salva id dei likes in un array
 
